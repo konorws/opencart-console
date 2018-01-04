@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+/**
+ * This application is tool for worked on Opencart and ocStore
+ *
+ * @author Mykhailo Yatzyshyn
+ * @copyrait 2018
+ */
+
+// Autoload
+try {
+    require __DIR__ . '/app/Core/Start.php';
+    $console = new Console();
+
+    $console->callCommand($argv);
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
