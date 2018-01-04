@@ -8,11 +8,18 @@
  */
 
 // Autoload
-try {
-    require __DIR__ . '/app/Core/Start.php';
-    $console = new Console();
+$librarys = glob(__DIR__ . '/app/Library/*.php');
+foreach ($librarys as $lib) {
+    include_once $lib;
+}
 
-    $console->callCommand($argv);
+include_once __DIR__ . '/app/Console.php';
+$console = new \Console\Console;
+$console->initApp($argv);
+try {
+    $console->callCommand();
 } catch (Exception $e) {
-    echo $e->getMessage();
+    $console->message->addMessage(
+            $e->getMessage(),'light_red'
+    );
 }
