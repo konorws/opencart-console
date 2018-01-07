@@ -17,7 +17,7 @@ Class SystemCommand extends AbstractCommand
         $commandName = $commandName.'Command';
         $text = "<?php
 
-namespace Console\CustomCommand;
+namespace Console\CustomCommands;
 
 use Console\Commands\AbstractCommand;
 
