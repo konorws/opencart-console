@@ -42,8 +42,9 @@ Class Message
      *
      * @param $message
      * @param string $color
+     * @param bool $newLine
      */
-    public function addMessage($message, $color = '')
+    public function addMessage($message, $color = '', $newLine = true)
     {
         $string = '';
 
@@ -52,8 +53,10 @@ Class Message
         } else {
             $string .= $message;
         }
-        $string .= PHP_EOL;
 
+        if($newLine) {
+            $string .= PHP_EOL;
+        }
         echo $string;
     }
 
@@ -65,6 +68,16 @@ Class Message
     public function getColors()
     {
         return $this->colors;
+    }
+
+    /**
+     * Get data in enter console
+     *
+     * @return bool|string
+     */
+    public function getEnterData()
+    {
+        return trim(fgets(STDIN));
     }
 
     /**

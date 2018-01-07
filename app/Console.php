@@ -56,6 +56,12 @@ Class Console
             $this->addInMap($command, '\Console\Commands\ ');
             require_once $command;
         }
+        //Load Custom Commands Classes
+        $commands = glob(__DIR__ . "/CustomCommands/*Command.php");
+        foreach ($commands as $command) {
+            $this->addInMap($command, '\Console\CustomCommands\ ');
+            require_once $command;
+        }
     }
 
     /**
