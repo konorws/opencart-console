@@ -3,7 +3,9 @@
 namespace Console;
 
 use Console\Library\Cache;
+use Console\Library\Config;
 use Console\Library\Message;
+use Console\Library\Registry;
 
 /**
  * Class Console
@@ -24,7 +26,7 @@ Class Console
      *
      * @var array
      */
-    protected $argumments = array();
+    protected $arguments = array();
 
     /**
      * @var \Console\Library\Message
@@ -32,9 +34,32 @@ Class Console
     public $message = null;
 
     /**
+     * @var \Console\Library\Config
+     */
+    protected $config = null;
+
+    /**
      * @var \Console\Library\Cache
      */
     protected $cache = null;
+
+
+    /**
+     * Console constructor.
+     */
+    public function __construct()
+    {
+        $registry = new Registry;
+
+        $this->cache = new Cache;
+        $registry->set($this->cache, 'cache');
+
+        $this->config = new Config;
+        $registry->set($this->config, 'config');
+
+        $this->message = new Message($registry);
+        $registry->set($this->message, 'message');
+    }
 
     /**
      * Initialize action
@@ -43,13 +68,10 @@ Class Console
      */
     public function initApp(array $argv = array())
     {
-        $this->argumments = $argv;
-
-        $this->message = new Message;
-        $this->cache = new Cache;
+        $this->arguments = $argv;
 
         //Load abstact command class
-        require_once __DIR__ . '/Commands/AbstarctCommandClass.php';
+        require_once __DIR__ . '/Commands/AbstractCommandClass.php';
         //Load Commands Classes
         $commands = glob(__DIR__ . "/Commands/*Command.php");
         foreach ($commands as $command) {
@@ -69,8 +91,8 @@ Class Console
      */
     public function callCommand()
     {
-        if (isset($this->argumments[1])) {
-            $command = $this->argumments[1];
+        if (isset($this->arguments[1])) {
+            $command = $this->arguments[1];
             $params = explode(':', $command);
             if (count($params) == 2) {
                 $this->initializeCommand($params[0], $params[1]);
@@ -112,7 +134,6 @@ Class Console
 
             $this->hasMethod($obj, $method);
 
-            $obj->initApp($this->argumments);
             $obj->$method();
 
         } catch (\Exception $e) {

@@ -17,7 +17,7 @@ Class SystemCommand extends AbstractCommand
         $commandName = $commandName.'Command';
         $text = "<?php
 
-namespace Console\CustomCommand;
+namespace Console\CustomCommands;
 
 use Console\Commands\AbstractCommand;
 
@@ -34,14 +34,11 @@ Class ".$commandName." extends AbstractCommand
 }";
 
         $file = __DIR__.'../../CustomCommands/'.$commandName.'.php';
-        $creted = file_put_contents($file,$text);
+        $created = file_put_contents($file,$text);
 
-        $this->message->addMessage(
-          'Start created '.$file,
-          'light_yellow'
-        );
+        $this->message->addMessage('Start created '.$file);
 
-        if($creted) {
+        if($created) {
             $this->message->addMessage(
                 'Success created Command: '.$commandName,
                 'light_green'
@@ -61,8 +58,8 @@ Class ".$commandName." extends AbstractCommand
      */
     private function getCommandName()
     {
-        if (isset($this->argumments[2])) {
-            $name = trim($this->argumments[2]);
+        if (isset($this->arguments[2])) {
+            $name = trim($this->arguments[2]);
         } else {
             $this->message->addMessage('Enter the command name:', 'light_green', false);
             $name = $this->message->getEnterData();

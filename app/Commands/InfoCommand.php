@@ -11,7 +11,7 @@ Class InfoCommand extends AbstractCommand
 
     public function welcomAction()
     {
-        $this->message->addMessage('Hello World', 'green');
+        $this->message->addMessage('Hello World');
     }
 
     public function messageColorAction()
