@@ -4,7 +4,7 @@ namespace Console\Commands;
 use Console\Console;
 
 /**
- * Class AbstarctCommand
+ * Class AbstractCommand
  * @package Console\Commands
  */
 abstract class AbstractCommand extends Console

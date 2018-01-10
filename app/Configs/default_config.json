@@ -1,0 +1,10 @@
+{
+  "CONSOLE": {
+    "DIR_CMS": "/src/",
+    "VERSION:": "1.0.0-dev",
+    "default_color": "yellow"
+  },
+  "CMS": {
+    "install": false
+  }
+}

@@ -14,10 +14,17 @@ Class Message
     private $colors = array();
 
     /**
+     * @var \Console\Library\Config
+     */
+    private $config;
+    /**
      * Message constructor.
      */
-    public function __construct()
+    public function __construct(Registry $registry)
     {
+        // Get Config
+        $this->config = $registry->get('config');
+
         //Set array colors
         $this->colors['black'] = '0;30';
         $this->colors['dark_gray'] = '1;30';
@@ -46,6 +53,10 @@ Class Message
      */
     public function addMessage($message, $color = '', $newLine = true)
     {
+        if(empty($color)) {
+            $color = $this->config->getConfig('CONSOLE','default_color');
+        }
+
         $string = '';
 
         if (!empty($color)) {

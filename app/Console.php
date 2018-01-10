@@ -5,6 +5,7 @@ namespace Console;
 use Console\Library\Cache;
 use Console\Library\Config;
 use Console\Library\Message;
+use Console\Library\Registry;
 
 /**
  * Class Console
@@ -25,7 +26,7 @@ Class Console
      *
      * @var array
      */
-    protected $argumments = array();
+    protected $arguments = array();
 
     /**
      * @var \Console\Library\Message
@@ -48,9 +49,16 @@ Class Console
      */
     public function __construct()
     {
+        $registry = new Registry;
+
         $this->cache = new Cache;
+        $registry->set($this->cache, 'cache');
+
         $this->config = new Config;
-        $this->message = new Message;
+        $registry->set($this->config, 'config');
+
+        $this->message = new Message($registry);
+        $registry->set($this->message, 'message');
     }
 
     /**
@@ -60,10 +68,10 @@ Class Console
      */
     public function initApp(array $argv = array())
     {
-        $this->argumments = $argv;
+        $this->arguments = $argv;
 
         //Load abstact command class
-        require_once __DIR__ . '/Commands/AbstarctCommandClass.php';
+        require_once __DIR__ . '/Commands/AbstractCommandClass.php';
         //Load Commands Classes
         $commands = glob(__DIR__ . "/Commands/*Command.php");
         foreach ($commands as $command) {
@@ -83,8 +91,8 @@ Class Console
      */
     public function callCommand()
     {
-        if (isset($this->argumments[1])) {
-            $command = $this->argumments[1];
+        if (isset($this->arguments[1])) {
+            $command = $this->arguments[1];
             $params = explode(':', $command);
             if (count($params) == 2) {
                 $this->initializeCommand($params[0], $params[1]);
