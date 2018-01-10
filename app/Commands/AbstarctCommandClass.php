@@ -2,8 +2,6 @@
 namespace Console\Commands;
 
 use Console\Console;
-use Console\Library\Cache;
-use Console\Library\Message;
 
 /**
  * Class AbstarctCommand
@@ -17,19 +15,6 @@ abstract class AbstractCommand extends Console
      * @var array
      */
     protected $list_function = array ();
-
-    /**
-     * Initialize action
-     *
-     * @param array $argv
-     */
-    public function initApp(array $argv = array())
-    {
-        $this->argumments = $argv;
-
-        $this->message = new Message;
-        $this->cache = new Cache;
-    }
 
     /**
      * Get access called methods

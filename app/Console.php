@@ -3,6 +3,7 @@
 namespace Console;
 
 use Console\Library\Cache;
+use Console\Library\Config;
 use Console\Library\Message;
 
 /**
@@ -32,9 +33,25 @@ Class Console
     public $message = null;
 
     /**
+     * @var \Console\Library\Config
+     */
+    protected $config = null;
+
+    /**
      * @var \Console\Library\Cache
      */
     protected $cache = null;
+
+
+    /**
+     * Console constructor.
+     */
+    public function __construct()
+    {
+        $this->cache = new Cache;
+        $this->config = new Config;
+        $this->message = new Message;
+    }
 
     /**
      * Initialize action
@@ -44,9 +61,6 @@ Class Console
     public function initApp(array $argv = array())
     {
         $this->argumments = $argv;
-
-        $this->message = new Message;
-        $this->cache = new Cache;
 
         //Load abstact command class
         require_once __DIR__ . '/Commands/AbstarctCommandClass.php';
@@ -112,7 +126,6 @@ Class Console
 
             $this->hasMethod($obj, $method);
 
-            $obj->initApp($this->argumments);
             $obj->$method();
 
         } catch (\Exception $e) {
