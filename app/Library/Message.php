@@ -17,8 +17,10 @@ Class Message
      * @var \Console\Library\Config
      */
     private $config;
+
     /**
      * Message constructor.
+     * @param Registry $registry
      */
     public function __construct(Registry $registry)
     {
@@ -69,6 +71,16 @@ Class Message
             $string .= PHP_EOL;
         }
         echo $string;
+    }
+
+    /**
+     * Set error message in console
+     *
+     * @param $message
+     */
+    public function addError($message)
+    {
+        $this->addMessage($message,'light_red');
     }
 
     /**
