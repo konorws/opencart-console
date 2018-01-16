@@ -1,0 +1,6 @@
+{
+  "CMS": {
+    "install": true,
+    "install_dir": "/src/"
+  }
+}

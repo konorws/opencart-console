@@ -4,6 +4,7 @@ namespace Console;
 
 use Console\Library\Cache;
 use Console\Library\Config;
+use Console\Library\File;
 use Console\Library\Message;
 use Console\Library\Registry;
 
@@ -43,6 +44,11 @@ Class Console
      */
     protected $cache = null;
 
+    /**
+     * @var \Console\Library\File
+     */
+    protected $file = null;
+
 
     /**
      * Console constructor.
@@ -59,6 +65,9 @@ Class Console
 
         $this->message = new Message($registry);
         $registry->set($this->message, 'message');
+
+        $this->file = new File($registry);
+        $registry->set($this->file, 'file');
     }
 
     /**
