@@ -28,6 +28,9 @@ Class Config
     public function __construct()
     {
         $this->loadConfig('default_config');
+
+        // Load overide config
+        $this->loadConfig('config');
     }
 
     /**
